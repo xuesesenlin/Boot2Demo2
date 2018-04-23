@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="context-path" th:content="@{/}"/>
+
+    <title>API</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/date/css/date.css}"/>
+    <link th:href="@{/css/plugins/fullcalendar/fullcalendar.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+            </ul>
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row content">
+            <div class="col-sm-3">
+                <h2>欢迎使用此帮助文档</h2>
+            </div>
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-3">
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+            </div>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/fullcalendar/fullcalendar.min.js}"></script>
+<script th:src="@{/date/js/lhgcore.min.js.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/date/js/lhgcalendar.min.js}" type="text/javascript" charset="utf-8"></script>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+var path = /*[[${#httpServletRequest.getScheme() + "://"
++ #httpServletRequest.getServerName() + ":"
++ #httpServletRequest.getServerPort()
++ #httpServletRequest.getContextPath()}]]*/;
+
+<!--加载菜单-->
+$.ajax({
+    url:path+'/v2/api-docs',
+    cache:false,
+    success:function(data){
+        var h = '';
+        $(data.tags).each(function(index,e){
+            h += menu_html(e.description,e.name);
+        });
+        $('#side-menu').append(h);
+    }
+}).done(function(d){
+}).fail(function() {
+    alert('维护中');
+}).always(function() {
+});
+
+<!--菜单模版-->
+function menu_html(a,b){
+    var h = '<li>'
+            +'<a onclick="cli(this)" data-target="/doc/'+b+'">'
+            +'<i class="fa fa-star"></i>'
+            +'    <span class="nav-label">'+a+'</span>'
+            +'</a>'
+            +'</li>';
+    return h;
+}
+
+<!--菜单跳转-->
+function cli(a){
+    var dt = $(a).attr('data-target');
+    $.ajax({
+        url:path+dt,
+        cache:false,
+        success:function(data){
+            $('.content').empty();
+            $('.content').html(data);
+        }
+    }).done(function(d){
+    }).fail(function() {
+        alert('维护中');
+    }).always(function() {
+    });
+}
+/*]]>*/
+
+</script>
+</body>
+</html>

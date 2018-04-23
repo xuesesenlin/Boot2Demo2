@@ -12,10 +12,18 @@ spring:
 
 #    datasource
   datasource:
-    url=jdbc: mysql://192.168.1.130/jpt
+    url: jdbc:mysql://192.168.1.130/demo2
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+
+  #     启用控制台颜色
+    output:
+          ansi:
+            enabled: ALWAYS
+  #      应对OPTIONS请求,前后端分离项目的token验证有时会触发该请求
+    mvc:
+      dispatch-options-request: true
 
 #邮箱
   mail:
@@ -53,3 +61,11 @@ logging:
 #分页每页默认条数设置
 page:
   pageSize: 15
+#分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params:
+    count:
+      countSql
