@@ -1,0 +1,55 @@
+#端口
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  thymeleaf:
+    prefix: classpath:/templates
+    encoding: UTF-8
+#缓存
+    cache: false
+
+#    datasource
+  datasource:
+    url=jdbc: mysql://192.168.1.130/jpt
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+#邮箱
+  mail:
+    host: smtp.qq.com
+    username: 287656156@qq.com
+    password: capvszpolemibgdc
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+feign:
+  hystrix:
+#  开启熔断机制，默认是开启的
+    enabled: true
+  httpclient:
+    enabled: true
+#    设置超时时间，防止首次调用出现服务宕机bug
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+#          单位 ms
+            timeoutInMilliseconds: 1000*1000
+# 日志级别
+error: true
+logging:
+    file: Boot2Demo2.log
+    level:
+      org.bt2.Boot2Demo: debug
+
+#分页每页默认条数设置
+page:
+  pageSize: 15
